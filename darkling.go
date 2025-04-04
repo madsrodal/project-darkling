@@ -30,7 +30,7 @@ func generateCharacter() character {
 	var statList = rollStatList()
 	var maxStatIndex = getMaxStatIndex(statList)
 	var class = getClass(maxStatIndex)
-	var character = character{
+	return character{
 		class,
 		statList[0],
 		statList[1],
@@ -39,7 +39,6 @@ func generateCharacter() character {
 		statList[4],
 		statList[5],
 	}
-	return character
 }
 
 func rollStatList() []int {
