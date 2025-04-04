@@ -17,8 +17,7 @@ type character struct {
 
 func main() {
 	var character = generateCharacter()
-	fmt.Println("Hello there darkling")
-	fmt.Printf("You are a %s\n", character.class)
+	fmt.Printf("Class: %s\n", character.class)
 	fmt.Printf("Str: %d\n", character.strength)
 	fmt.Printf("Dex: %d\n", character.dexterity)
 	fmt.Printf("Con: %d\n", character.constitution)
