@@ -15,6 +15,15 @@ type character struct {
 	charisma     int
 }
 
+const (
+	Strength     int = 0
+	Dexterity    int = 1
+	Constitution int = 2
+	Intelligence int = 3
+	Wisdom       int = 4
+	Charisma     int = 5
+)
+
 func main() {
 	var character = generateCharacter()
 	fmt.Printf("Class: %s\n", character.class)
@@ -27,30 +36,26 @@ func main() {
 }
 
 func generateCharacter() character {
-	var statList = rollStatList()
-	var maxStatIndex = getMaxStatIndex(statList)
-	var class = getClass(maxStatIndex)
+	var stats = rollStats()
+	var classStat = getClassStat(stats)
+	var class = getClass(classStat)
 	return character{
 		class,
-		statList[0],
-		statList[1],
-		statList[2],
-		statList[3],
-		statList[4],
-		statList[5],
+		stats[Strength],
+		stats[Dexterity],
+		stats[Constitution],
+		stats[Intelligence],
+		stats[Wisdom],
+		stats[Charisma],
 	}
 }
 
-func rollStatList() []int {
-	var statList = make([]int, 0)
+func rollStats() []int {
+	var stats = make([]int, 0)
 	for range 6 {
-		statList = append(statList, rollStat())
+		stats = append(stats, rollDice(3, 6))
 	}
-	return statList
-}
-
-func rollStat() int {
-	return rollDice(3, 6)
+	return stats
 }
 
 func rollDice(amount int, sides int) int {
@@ -61,29 +66,29 @@ func rollDice(amount int, sides int) int {
 	return sum
 }
 
-func getMaxStatIndex(statList []int) int {
-	var maxIndex = 0
+func getClassStat(stats []int) int {
+	var maxStat = 0
 	var maxValue = 0
-	for index, value := range statList {
-		if index != 2 && (value > maxValue || value == maxValue && rand.Intn(2) == 1) {
-			maxIndex = index
+	for stat, value := range stats {
+		if stat != Constitution && (value > maxValue || value == maxValue && rand.Intn(2) == 1) {
+			maxStat = stat
 			maxValue = value
 		}
 	}
-	return maxIndex
+	return maxStat
 }
 
-func getClass(index int) string {
-	switch index {
-	case 0:
+func getClass(classStat int) string {
+	switch classStat {
+	case Strength:
 		return "Fighter"
-	case 1:
+	case Dexterity:
 		return "Thief"
-	case 3:
+	case Intelligence:
 		return "Wizard"
-	case 4:
+	case Wisdom:
 		return "Cleric"
-	case 5:
+	case Charisma:
 		return "Bard"
 	}
 	return "Joker"
