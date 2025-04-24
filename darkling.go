@@ -51,9 +51,17 @@ func generateCharacter() character {
 }
 
 func rollStats() []int {
+	var maxValue = 0
 	var stats = make([]int, 0)
 	for range 6 {
-		stats = append(stats, rollDice(3, 6))
+		var value = rollDice(3, 6)
+		stats = append(stats, value)
+		if value > maxValue {
+			maxValue = value
+		}
+	}
+	if maxValue < 12 {
+		return rollStats()
 	}
 	return stats
 }
